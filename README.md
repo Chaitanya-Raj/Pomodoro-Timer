@@ -8,4 +8,4 @@ Web Development 101
 
 Pairing Project
 
-Major contribution by @tanshinayak :heart:
+This project wouldn't have been possible without the help from @tanshinayak :heart: xD
