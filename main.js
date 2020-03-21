@@ -1,45 +1,137 @@
-let start = document.getElementById('start');
-let pause = document.getElementById('pause');
-let stop = document.getElementById('stop');
-let restart = document.getElementById('restart');
-let countDownDate = new Date();
-countDownDate.setSeconds(countDownDate.getSeconds() + 10);
-countDownDate = countDownDate.getTime();
+const clock = document.getElementById('clock');
+const sessionTime = document.getElementById('session');
+const breakTime = document.getElementById('break');
+const indicator = document.getElementById("indicator");
 
+let countdown;
+let secondsLeft;
+let isBreak = false;
 
-function timer() {
+function formatTime(selection) {
+    if (selection.innerHTML < 10)
+        selection.innerHTML = "0" + selection.innerHTML;
+}
 
-    var x = setInterval(function () {
-        let now = new Date().getTime();
+function update_choices() {
+    const incSes = document.getElementById("ses-inc");
+    const decSes = document.getElementById("ses-dec");
+    const incBrk = document.getElementById("brk-inc");
+    const decBrk = document.getElementById("brk-dec");
 
-        let distance = countDownDate - now;
+    incSes.addEventListener("click", () => {
+        sessionTime.innerHTML = parseInt(sessionTime.innerHTML) + 1;
+        formatTime(sessionTime);
+        displayTimeLeft(sessionTime.innerHTML * 60);
+    });
 
-        let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        let seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    decSes.addEventListener("click", () => {
+        if (sessionTime.innerHTML != 1) {
+            sessionTime.innerHTML = parseInt(sessionTime.innerHTML) - 1;
+            formatTime(sessionTime);
+            displayTimeLeft(sessionTime.innerHTML * 60);
+        }
+    });
 
-        if (minutes.toString().length < 2) minutes = "0" + minutes;
-        if (seconds.toString().length < 2) seconds = "0" + seconds;
+    incBrk.addEventListener("click", () => {
+        breakTime.innerHTML = parseInt(breakTime.innerHTML) + 1;
+        formatTime(breakTime);
+    });
 
-        document.getElementById("time-left").innerHTML = minutes + " : " + seconds;
+    decBrk.addEventListener("click", () => {
+        if (breakTime.innerHTML != 1) {
+            breakTime.innerHTML = parseInt(breakTime.innerHTML) - 1;
+            formatTime(breakTime);
+        }
+    });
+}
 
-        if (distance < 0) {
-            clearInterval(x);
-            document.getElementById("time-left").innerHTML = "Time for a break";
+function breakCount() {
+    indicator.innerHTML = "Break";
+    timer(breakTime.innerHTML * 60 - 1);
+}
+
+function checkBreak() {
+    if (isBreak == true) {
+        setTimeout(breakCount, 1000);
+    } else {
+        start.click();
+    }
+}
+
+function displayTimeLeft(seconds) {
+    let minute = parseInt(seconds / 60);
+    let remSeconds = seconds % 60;
+    let display = `${minute >= 10 ? minute : '0' + minute}:${remSeconds >= 10 ? remSeconds : '0' + remSeconds}`;
+    clock.innerHTML = display;
+}
+
+function timer(seconds) {
+    const now = Date.now();
+    const startTime = now + (seconds * 1000);
+    displayTimeLeft(seconds);
+
+    countdown = setInterval(() => {
+        secondsLeft = Math.round((startTime - Date.now()) / 1000);
+
+        secondsLeft < 10 ? clock.style.color = "limegreen" : clock.style.color = "white";
+
+        if (secondsLeft <= 0) {
+            secondsLeft = 0;
+            displayTimeLeft(secondsLeft);
+            clearInterval(countdown);
+            clock.style.color = "white";
+            (isBreak) ? isBreak = false : isBreak = true;
+            checkBreak();
+        } else {
+            displayTimeLeft(secondsLeft);
         }
     }, 1000);
 }
 
-function reTimer() {
-    let countDownDate = new Date();
-    countDownDate.setSeconds(countDownDate.getSeconds() + 10);
-    countDownDate = countDownDate.getTime();
-    timer();
+
+function modifyTimer() {
+    const start = document.getElementById("start");
+    const pause = document.getElementById("pause");
+    const reset = document.getElementById("reset");
+    const stop = document.getElementById("stop");
+    let pausePoint;
+    let isPaused = false;
+
+    start.addEventListener("click", () => {
+        indicator.innerHTML = "Session";
+        clearInterval(countdown);
+        pause.innerHTML = "Pause";
+        timer(sessionTime.innerHTML * 60);
+    });
+
+    pause.addEventListener("click", () => {
+        if (pause.innerHTML == "Pause") {
+            isPaused = true;
+            pausePoint = secondsLeft;
+            clearInterval(countdown);
+            pause.innerHTML = "Resume";
+        } else {
+            isPaused = false;
+            pause.innerHTML = "Pause";
+            timer(pausePoint);
+        }
+    });
+
+    stop.addEventListener("click", () => {
+        clearInterval(countdown);
+        pause.innerHTML = "Pause";
+        displayTimeLeft(sessionTime.innerHTML * 60);
+    });
+
+    reset.addEventListener("click", () => {
+        clearInterval(countdown);
+        pause.innerHTML = "Pause";
+        sessionTime.innerHTML = "25";
+        breakTime.innerHTML = "05";
+        clock.innerHTML = "25:00";
+        isBreak = false;
+    });
 }
 
-function stopTimer() {
-    clearInterval(x);
-}
-start.addEventListener('click', timer);
-restart.addEventListener('click', reTimer);
-stop.addEventListener('click', stopTimer);
-// pause.addEventListener('click', pause);
+update_choices();
+modifyTimer();

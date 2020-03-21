@@ -9,15 +9,15 @@
 </head>
 
 <body>
-    <div class="container-fluid bg-secondary">
+    <div id="main" class="container-fluid bg-secondary">
         <!--Heading-->
         <div class="container">
-            <h1 class="text-dark text-center">
+            <h1 id="header">
                 Pomodoro Clock
             </h1>
         </div>
         <!--First box of session and break-->
-        <div class="container ml-5 text-center">
+        <div class="container-fluid ml-5">
             <div class="container row bg-dark ml-5 text-center">
                 <div class="col-sm-6 pl-5">
                     <h2 class="text-light font-weight-bold ">
@@ -29,20 +29,34 @@
                         Break
                     </h2>
                 </div>
+                <div class="col-sm-6 pl-5 value-selector">
+                    <button id="ses-dec" class="btn btn-outline-light">-</button>
+                    <h2 id="session" class="text-light font-weight-bold ml-3 mr-3">
+                        25
+                    </h2>
+                    <button id="ses-inc" class="btn btn-outline-light">+</button>
+                </div>
+                <div class="col-sm-6 pl-5 value-selector">
+                    <button id="brk-dec" class="btn btn-outline-light">-</button>
+                    <h2 id="break" class="text-light font-weight-bold ml-3 mr-3 ">
+                        05
+                    </h2>
+                    <button id="brk-inc" class="btn btn-outline-light">+</button>
+                </div>
             </div>
         </div>
         <div class=" container text-center mt-5 bg-dark text-light">
-            <div id="time-left">25 : 00</div>
-            <div class="container ml-5">
-                <button id="start" onclick=" " type="button"
-                    class="btn btn-outline-light ml-5 mt-5 mr-5  font-weight-bold">Start</button>
-                <button id="pause" type="button"
-                    class="btn btn-outline-light ml-5 mt-5 mr-5  font-weight-bold">Pause</button>
-                <button id=" stop" type="button"
-                    class="btn btn-outline-light ml-5 mt-5 mr-5  font-weight-bold">Stop</button>
-                <button id=" restart" type="button"
-                    class="btn btn-outline-light ml-5 mt-5 mr-5  font-weight-bold">Restart</button>
-            </div>
+            <div id="indicator" class="pt-2">Session</div>
+            <div id="clock" class="pt-2">25:00</div>
+        </div>
+        <div class="container text-center mt-5 bg-dark text-light pb-5">
+            <button id="start" type="button"
+                class="btn btn-outline-light ml-5 mt-5 mr-5  font-weight-bold">Start</button>
+            <button id="pause" type="button"
+                class="btn btn-outline-light ml-5 mt-5 mr-5  font-weight-bold">Pause</button>
+            <button id="stop" type="button" class="btn btn-outline-light ml-5 mt-5 mr-5  font-weight-bold">Stop</button>
+            <button id="reset" type="button"
+                class="btn btn-outline-light ml-5 mt-5 mr-5  font-weight-bold">Reset</button>
         </div>
     </div>
     <script src=" main.js">
