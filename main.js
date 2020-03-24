@@ -2,6 +2,7 @@ const clock = document.getElementById('clock');
 const sessionTime = document.getElementById('session');
 const breakTime = document.getElementById('break');
 const indicator = document.getElementById("indicator");
+const alarm = document.getElementById("alarm");
 
 let countdown;
 let secondsLeft;
@@ -77,6 +78,7 @@ function timer(seconds) {
 
         if (secondsLeft <= 0) {
             secondsLeft = 0;
+            alarm.play();
             displayTimeLeft(secondsLeft);
             clearInterval(countdown);
             clock.style.color = "white";
