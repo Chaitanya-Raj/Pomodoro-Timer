@@ -1,45 +1,93 @@
-#main {
-    height: 100vh;
-    background-image: url(background.png);
-    background-size: cover;
+* {
+  color: white;
+  text-shadow: 3px 3px 5px #000;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  text-align: center;
 }
 
-h2,
-div,
+body {
+  background-image: url(background.png);
+  background-size: cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+#container {
+  display: flex;
+  flex-direction: column;
+}
+
+header {
+  margin: 20px;
+}
+
+h1 {
+  font-size: 3rem;
+}
+
+h2 {
+  font-size: 2rem;
+  margin: 10px;
+}
+
+section {
+  margin: 20px;
+}
+
 button {
-    text-shadow: 0.07em 0.07em black;
+  background: transparent;
+  border-radius: 5px;
+  border: 1px solid white;
+  padding: 5px 10px;
+  font-size: 1.5rem;
 }
 
-button {
-    box-shadow: 0.1em 0.1em black;
+.config {
+  display: flex;
+  flex-direction: column;
 }
 
-#header {
-    color: white;
-    text-align: center;
-    padding: 0.4em;
-    font-size: 4em;
-    text-shadow: 0.07em 0.07em black;
+.config-buttons {
+  display: flex;
+  align-items: center;
 }
 
-.value-selector {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.button-container {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
 }
 
-#clock {
-    font-size: 7em;
+button:hover {
+  transform: scale(1.1);
+  background: white;
+  color: #333;
 }
 
 #indicator {
-    font-size: 3em;
+  font-size: 2rem;
 }
 
-#clock-container {
-    margin-left: 20px;
+#clock {
+  font-size: 5rem;
 }
 
-.box {
-    margin-left: 7em;
+@media (min-width: 501px) {
+  #container {
+    background-color: rgba(0, 0, 0, 0.5);
+    width: 500px;
+    border-radius: 50px;
+    padding: 30px;
+  }
+}
+
+@media (max-width: 500px) {
+  #container {
+    height: 100vh;
+    width: 100vw;
+    justify-content: space-evenly;
+    background-color: rgba(0, 0, 0, 0.3);
+  }
 }
